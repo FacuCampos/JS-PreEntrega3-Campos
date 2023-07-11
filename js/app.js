@@ -1,35 +1,3 @@
-// Catalogo de productos
-class Producto{
-    id;
-    nombre;
-    precio;
-    editorial;
-    imagen;
-    alternativo;
-
-    constructor(id, nombre, precio, editorial, imagen, alternativo){
-        this.id = id;
-        this.nombre = nombre;
-        this.precio = precio;
-        this.editorial = editorial;
-        this.imagen = imagen;
-        this.alternativo = alternativo;
-    }
-}
-
-const catalogo = [
-    new Producto('catan', 'Catan', 35000, 'Devir', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('bang', 'Bang!', 22000, 'Da Vinci Games', 'foto_generica.jpg', 'Texto alternativo'),
-    new Producto('sushiGoParty', 'Sushi Go! Party', 18000, 'Devir', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('cuboRubik', 'Cubo Rubik', 5800, 'Hasbro', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('manualDnD', 'Manual de Dungeons and Dragons', 21500, 'Wizards of the Coast', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('setDados', 'Set de Dados', 7750, 'T&G', 'foto_generica.jpg'),
-    new Producto('manualCoC', 'Manual de La Llamada de Cthulhu', 25000, 'Edge Entertainment', 'foto_generica.jpg', 'Texto alternativo'),
-    new Producto('alice', 'Alice ha desaparecido', 7900, 'Devir', 'foto_generica.jpg', 'Texto alternativo'),
-    new Producto('stoneAge', 'Stone Age', 19500, 'Devir', 'foto_generica.jpg', 'Texto alternativo'),
-];
-
-
 // Constructor de cada item de la factura
 class ItemFactura{
     id;
