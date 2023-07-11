@@ -22,7 +22,7 @@ p {
 
 body {
     background-attachment: fixed;
-    background-image: url(./img/subpattern/dot-grid.webp);
+    background-image: url(../img/subpattern/dot-grid.webp);
     position: relative;
     min-height: 100%;
     width: 100%;
