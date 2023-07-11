@@ -1,7 +1,4 @@
-let precioFinal = 0
-// CLASES
-//Constructor de productos que se usaria si el dueño de la 
-//tienda quisiera agregar nuevos
+// Catalogo de productos
 class Producto{
     id;
     nombre;
@@ -20,6 +17,19 @@ class Producto{
     }
 }
 
+const catalogo = [
+    new Producto('catan', 'Catan', 35000, 'Devir', 'foto_generica.jpg', 'Texto alternativo'), 
+    new Producto('bang', 'Bang!', 22000, 'Da Vinci Games', 'foto_generica.jpg', 'Texto alternativo'),
+    new Producto('sushiGoParty', 'Sushi Go! Party', 18000, 'Devir', 'foto_generica.jpg', 'Texto alternativo'), 
+    new Producto('cuboRubik', 'Cubo Rubik', 5800, 'Hasbro', 'foto_generica.jpg', 'Texto alternativo'), 
+    new Producto('manualDnD', 'Manual de Dungeons and Dragons', 21500, 'Wizards of the Coast', 'foto_generica.jpg', 'Texto alternativo'), 
+    new Producto('setDados', 'Set de Dados', 7750, 'T&G', 'foto_generica.jpg'),
+    new Producto('manualCoC', 'Manual de La Llamada de Cthulhu', 25000, 'Edge Entertainment', 'foto_generica.jpg', 'Texto alternativo'),
+    new Producto('alice', 'Alice ha desaparecido', 7900, 'Devir', 'foto_generica.jpg', 'Texto alternativo'),
+    new Producto('stoneAge', 'Stone Age', 19500, 'Devir', 'foto_generica.jpg', 'Texto alternativo'),
+];
+
+
 // Constructor de cada item de la factura
 class ItemFactura{
     nombre;
@@ -33,30 +43,28 @@ class ItemFactura{
     }
 }
 
-// ARRAYS
-// Productos
-const catalogo = [
-    new Producto('catan', 'Catan', 35000, 'Devir', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('bang', 'Bang!', 22000, 'Da Vinci Games', 'foto_generica.jpg', 'Texto alternativo'),
-    new Producto('sushiGoParty', 'Sushi Go! Party', 18000, 'Devir', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('cuboRubik', 'Cubo Rubik', 5800, 'Hasbro', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('manualDnD', 'Manual de Dungeons and Dragons', 21500, 'Wizards of the Coast', 'foto_generica.jpg', 'Texto alternativo'), 
-    new Producto('setDados', 'Set de Dados', 7750, 'T&G', 'foto_generica.jpg'),
-    new Producto('manualCoC', 'Manual de La Llamada de Cthulhu', 25000, 'Edge Entertainment', 'foto_generica.jpg', 'Texto alternativo'),
-    new Producto('alice', 'Alice ha desaparecido', 7900, 'Devir', 'foto_generica.jpg', 'Texto alternativo'),
-    new Producto('stoneAge', 'Stone Age', 19500, 'Devir', 'foto_generica.jpg', 'Texto alternativo'),
-];
+
 // Items del carrito
-const arrayCarrito = [];
+let arrayCarrito = [];
+
+function inicio(){
+    document.addEventListener('DOMContentLoaded', traerCarrito);
+    mostrarCatalogo();
+}
 
 
-function mostrarCatalogo (catalogo){
+function traerCarrito(){
+    arrayCarrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    mostrarCarrito();
+}
+
+
+function mostrarCatalogo (){
     let seccionProductos = document.getElementById('divDestacados');
     seccionProductos.innerHTML = '';
-    for (item = 0; item < catalogo.length; item++){
-        let producto = catalogo[item];
+    catalogo.forEach((producto) => {
         let card = document.createElement('div');
-        card.className = "d-flex justify-content-center";
+        card.classList.add('d-flex', 'justify-content-center');
         card.innerHTML = `  <figure  class="producto">
                                 <div>
                                     <img src="./img/productos/${producto.imagen}" alt="${producto.alternativo}">
@@ -68,9 +76,9 @@ function mostrarCatalogo (catalogo){
                                 </div>
                             </figure>`;
         seccionProductos.appendChild(card);
-        const boton = document.getElementById(`agregar-${producto.id}`);
-        boton.addEventListener('click', () => {agregarCarrito(producto)});
-    }
+        const botonAgregar = document.getElementById(`agregar-${producto.id}`);
+        botonAgregar.addEventListener('click', () => {agregarCarrito(producto)});
+    })
 }
 
 
@@ -83,26 +91,60 @@ function agregarCarrito (eleccion){
         arrayCarrito[indice].cantidad++;
     }
     mostrarCarrito()
+    localStorage.setItem("carrito", JSON.stringify(arrayCarrito));
 }
+
 
 function mostrarCarrito() {
     let tablaFactura = document.getElementById('facturaBody');
     tablaFactura.innerHTML = '';
-    for (item = 0; item < arrayCarrito.length; item++){
-        let elemento = arrayCarrito[item];
+    arrayCarrito.forEach((producto) => {
         let itemFactura = document.createElement('tr');
         itemFactura.className = 'itemTicket';
-        itemFactura.innerHTML = `   <th scope="row">${elemento.cantidad}</th>
-                                    <td>${elemento.nombre}</td>
-                                    <td>$ ${(elemento.precio*elemento.cantidad).toLocaleString()}</td>`;
+        itemFactura.innerHTML = `   <th scope="row"> 
+                                        <div class="celdaCantidad">
+                                            <p>${producto.cantidad}</p>
+                                        </div>
+                                    </th>
+                                    <td><div><p>${producto.nombre}</p></div></td>
+                                    <td><div><p>$ ${(producto.precio*producto.cantidad).toLocaleString()}</p></div></td>`;
         tablaFactura.appendChild(itemFactura);
-    }
+    })
+
     let itemTotal = document.createElement('tr');
-    itemTotal.innerHTML = `<th class="text-end" colspan="2" scope="row">Total:</th>
-    <td>$ ${(arrayCarrito.reduce((total, producto) => total + (producto.precio*producto.cantidad), 0)).toLocaleString()}</td>`
+    itemTotal.innerHTML = ` <th colspan="2" scope="row" id="total">Total:</th>
+                            <td colspan="1">
+                                <div><p>$ ${(arrayCarrito.reduce((total, producto) => total + (producto.precio*producto.cantidad), 0)).toLocaleString()}</p></div>
+                            </td>`
     tablaFactura.appendChild(itemTotal);
+    
+    let botonLimpiar = document.createElement('button');
+    botonLimpiar.className = 'borrarCarrito'
+    botonLimpiar.innerText = 'Limpiar';
+    tablaFactura.appendChild(botonLimpiar);
+    botonLimpiar.addEventListener('click', () => {limpiarCarrito()})
 }
 
+
+function restarItem (){
+    console.log('-1');
+}
+
+function sumarItem(){
+    console.log('+1');
+}
+
+
+function limpiarCarrito (){
+    arrayCarrito.splice(0,arrayCarrito.length);
+    let carritoAlmacenado = JSON.parse(localStorage.getItem("carrito"));
+    carritoAlmacenado = [];
+    localStorage.setItem("carrito", JSON.stringify(carritoAlmacenado));
+    mostrarCarrito()
+}
+
+
+
+
 //INICIO DEL PROGRAMA
-mostrarCatalogo(catalogo)
-console.log(arrayCarrito);
+inicio()
