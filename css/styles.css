@@ -17,7 +17,7 @@ h1 {
 p {
     font-size: 1.8rem;
     line-height: 2.7rem;
-    margin-bottom: 0;
+    margin: 0;
 }
 
 body {
@@ -40,6 +40,7 @@ th {
     justify-content: center;
     font-weight: bold;
     text-align: left;
+    font-size: 1.2rem;
 }
 
 td {
@@ -127,18 +128,27 @@ td {
 .producto .info-producto {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
     flex: 1;
 }
 .producto .info-producto figcaption {
+    height: 100%;
     font-size: 1.4rem;
     line-height: 3rem;
     font-weight: 700;
+    display: flex;
+    align-items: center;
 }
+
+.producto .info-producto figcaption p{
+    font-size: 1.8rem;
+    margin-bottom: 0;
+}
+
 .producto .info-producto p {
     width: 200px;
-    margin: 10px 0px;
+    margin: 10px 0px 20px 0px;
 }
 .producto .info-producto button {
     font-size: 1.4rem;
@@ -185,16 +195,10 @@ td {
     margin-bottom: 0;
 }
 
-
 .ticketCarrito p{
     display: flex;
     font-size: 1.2rem;
     line-height: 1.8rem;
-    margin-bottom: 0;
-}
-
-.ticketCarrito td p{
-    margin-top: 2px;
 }
 
 .borrarCarrito{
@@ -223,11 +227,11 @@ td {
 }
 
 .productoCol{
-    width: 70%;
+    width: 57%;
 }
 
 .subtotalCol{
-    width: 100%;
+    width: 23%;
 }
 
 .celdaCantidad{
@@ -236,6 +240,12 @@ td {
     width: 100%;
     height: 100%;
     align-items: center;
+    justify-content: space-between;
+}
+
+.tdCantidad{
+    border-left: 1px solid rgba(27, 48, 57, .3);
+    border-right: 1px solid rgba(27, 48, 57, .3);
 }
 
 .celdaCantidad button{
@@ -258,10 +268,49 @@ td {
     background-color: #2b4d5b;
 }
 
-.celdaCantidad p{
+.totalTexto{
+    text-align: right;
+    font-size: 1.3rem;
+}
+
+.ticketCarrito table .filaTotal td{
+    background-color: rgb(194, 194, 194);
+    color: color;
+    text-align: right;
+}
+
+.filaTotal th{
+    background-color: rgb(194, 194, 194);
+    color: black;
+}
+
+.precioColumna{
+    text-align: right;
+    font-size: 1.2rem;
+}
+
+.itemEnTabla{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.imgCarrito{
+    width: 40px;
+    border-radius: 5px;
+}
+
+.cantidadTicket{
+    margin:0;
     margin: 0 5px;
 }
 
-.totalTexto{
-    text-align: right;
+.nombreEnTabla{
+    margin-left: 10px;
+}
+
+.ticketCarrito table .headTabla{
+    background-color: #1b3039;
+    color: white;
 }

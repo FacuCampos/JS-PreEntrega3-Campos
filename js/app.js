@@ -36,12 +36,16 @@ class ItemFactura{
     nombre;
     precio;
     cantidad;
+    imagen;
+    alternativo;
 
-    constructor(id, nombre, precio, cantidad){
+    constructor(id, nombre, precio, cantidad, imagen, alternativo){
         this.id =id;
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
+        this.imagen = imagen;
+        this.alternativo = alternativo;
     }
 }
 
@@ -74,7 +78,7 @@ function mostrarCarrito() {
     })
 
     const filaTotal = document.createElement('tr');
-    filaTotal.classList.add('itemTicket');
+    filaTotal.classList.add('itemTicket', 'filaTotal');
 
     let thTotal = document.createElement('th');
     thTotal.colSpan = 2;
@@ -83,7 +87,8 @@ function mostrarCarrito() {
     filaTotal.appendChild(thTotal);
 
     let tdTotal = document.createElement('td');
-    tdTotal.textContent = '$ ' +(arrayCarrito.reduce((total, producto) => total + (producto.precio*producto.cantidad), 0)).toLocaleString();
+    tdTotal.classList.add('precioColumna')
+    tdTotal.innerHTML = `$ ${(arrayCarrito.reduce((total, producto) => total + (producto.precio*producto.cantidad), 0)).toLocaleString()}`;
     filaTotal.appendChild(tdTotal);
 
     tabla.appendChild(filaTotal);
@@ -100,19 +105,21 @@ function filaTabla(producto, tabla){
     fila.classList.add('itemTicket');
     
     let dato = document.createElement('td');
+    dato.innerHTML = `<div class="itemEnTabla"><img class="imgCarrito" src="./img/productos/${producto.imagen}" alt="${producto.alternativo}"><p class="nombreEnTabla">${producto.nombre}</p></div>`;
+    fila.appendChild(dato);
+    
+    dato = document.createElement('td');
+    dato.classList.add('tdCantidad')
     dato.innerHTML = `    <div class="celdaCantidad">
                             <button id="restar-${producto.id}">-</button>
-                            <p>${producto.cantidad}</p>
+                            <p class="cantidadTicket">${producto.cantidad}</p>
                             <button id="sumar-${producto.id}">+</button>
                         </div>`
     fila.appendChild(dato);
     
     dato = document.createElement('td');
-    dato.textContent = producto.nombre;
-    fila.appendChild(dato);
-    
-    dato = document.createElement('td');
-    dato.textContent = '$ '+(producto.precio*producto.cantidad).toLocaleString();
+    dato.classList.add('precioColumna');
+    dato.innerHTML = `$ ${(producto.precio*producto.cantidad).toLocaleString()}`;
     fila.appendChild(dato);
     
     tabla.appendChild(fila);
@@ -147,8 +154,8 @@ function tarjeta(producto, seccion){
     figure.classList.add('producto');
     figure.innerHTML = `<div><img src="./img/productos/${imagen}" alt="${alternativo}"></div>
                         <div class="info-producto">
-                            <figcaption>${nombre}</figcaption>
-                            <p>$ ${precio}</p>
+                            <figcaption><p>${nombre}</p></figcaption>
+                            <p>$ ${precio.toLocaleString()}</p>
                             <button id="agregar-${id}">+ Agregar al carrito</button>
                         </div>`;
     card.appendChild(figure);
@@ -163,7 +170,7 @@ function agregarCarrito (eleccion){
     if(indice !== -1){
         arrayCarrito[indice].cantidad++;
     }else{
-        let nuevoItem = new ItemFactura(eleccion.id, eleccion.nombre, eleccion.precio, 1);
+        let nuevoItem = new ItemFactura(eleccion.id, eleccion.nombre, eleccion.precio, 1, eleccion.imagen, eleccion.alternativo);
         arrayCarrito.push(nuevoItem);
     }
     carritoAlStorage();
