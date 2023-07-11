@@ -126,15 +126,6 @@ function mostrarCarrito() {
 }
 
 
-function restarItem (){
-    console.log('-1');
-}
-
-function sumarItem(){
-    console.log('+1');
-}
-
-
 function limpiarCarrito (){
     arrayCarrito.splice(0,arrayCarrito.length);
     let carritoAlmacenado = JSON.parse(localStorage.getItem("carrito"));
@@ -142,8 +133,6 @@ function limpiarCarrito (){
     localStorage.setItem("carrito", JSON.stringify(carritoAlmacenado));
     mostrarCarrito()
 }
-
-
 
 
 //INICIO DEL PROGRAMA
