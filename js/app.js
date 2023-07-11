@@ -120,7 +120,7 @@ function tarjeta(producto, seccion){
 
     let figure = document.createElement('figure');
     figure.classList.add('producto');
-    figure.innerHTML = `<div><img src="/img/productos/${imagen}" alt="${alternativo}"></div>
+    figure.innerHTML = `<div><img src="img/productos/${imagen}" alt="${alternativo}"></div>
                         <div class="info-producto">
                             <figcaption><p>${nombre}</p></figcaption>
                             <p>$ ${precio.toLocaleString()}</p>
